@@ -10,6 +10,6 @@ class StreamerRepositoryImpl @Inject constructor(
 ) : StreamerRepository {
 
     override suspend fun getStreamers(): List<StreamerDto> {
-        return api.getStreamers()
+        return api.getStreamers().streamers
     }
 }

@@ -28,11 +28,13 @@ fun StreamerListScreen(
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()){
             items(state.streamers){
-                streamer -> StreamerListItem(
-                streamer = streamer,
-                onItemClick = {
+                streamer ->
+                StreamerListItem(
+                    streamer = streamer,
+                    onItemClick = {
                     // TODO: add navigation here
-                })
+                    }
+                )
             }
         }
         if(state.error.isNotBlank()){
