@@ -1,4 +1,4 @@
-package com.example.chessmate.ui.home
+package com.example.chessmate.presentation.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
