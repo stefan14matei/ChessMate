@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -35,11 +38,32 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
-dependencies {
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
 
+dependencies {
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation (libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.javax.inject)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

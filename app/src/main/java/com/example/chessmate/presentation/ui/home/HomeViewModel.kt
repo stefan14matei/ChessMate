@@ -1,4 +1,4 @@
-package com.example.chessmate.ui.home
+package com.example.chessmate.presentation.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
