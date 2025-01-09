@@ -1,7 +1,6 @@
 package com.example.chessmate.presentation.ui.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,12 +10,14 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.chessmate.presentation.navigation.Screen
 
 @Composable
 fun StreamerListScreen(
@@ -27,21 +28,20 @@ fun StreamerListScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()){
-            items(state.streamers){
-                streamer ->
-                StreamerListItem(
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(state.streamers) { streamer ->
+                StreamerCardItem(
                     streamer = streamer,
-                    onItemClick = {
-                    // TODO: add navigation here
+                    onItemClick = { clickedStreamer ->
+                        viewModel.getPlayerData(clickedStreamer.username)
                     }
                 )
             }
         }
-        if(state.error.isNotBlank()){
+        if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
-                color =  MaterialTheme.colors.error,
+                color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -49,10 +49,23 @@ fun StreamerListScreen(
                     .align(Alignment.Center)
             )
         }
-        if(state.isLoading){
+        if (state.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
+        }
+    }
+    LaunchedEffect(key1 = state.player) { // Correct key
+        if (state.player != null) { // Correct non-null check
+            navController.navigate(
+                Screen.StreamerDetailScreen.createRoute(
+                    username = state.player.username,
+                    followers = state.player.followers,
+                    league = state.player.league,
+                    lastOnline = state.player.lastOnline
+                )
+            )
+            viewModel.resetPlayer() // Correctly reset the player
         }
     }
 }
