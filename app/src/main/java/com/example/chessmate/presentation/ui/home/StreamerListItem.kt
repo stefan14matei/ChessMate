@@ -98,7 +98,7 @@ fun StreamerListItem (
                     }
                 },
                 style = MaterialTheme.typography.body2,
-                fontSize = 16.sp
+                fontSize = 13.sp
             )
         }
     }
