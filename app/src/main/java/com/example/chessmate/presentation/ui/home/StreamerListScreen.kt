@@ -1,7 +1,6 @@
 package com.example.chessmate.presentation.ui.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.chessmate.Screen
 
 @Composable
 fun StreamerListScreen(
@@ -27,21 +27,20 @@ fun StreamerListScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()){
-            items(state.streamers){
-                streamer ->
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(state.streamers) { streamer ->
                 StreamerListItem(
                     streamer = streamer,
                     onItemClick = {
-                    // TODO: add navigation here
+                        navController.navigate(Screen.StreamerDetailsScreen.route + "/${streamer.username}")
                     }
                 )
             }
         }
-        if(state.error.isNotBlank()){
+        if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
-                color =  MaterialTheme.colors.error,
+                color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -49,10 +48,23 @@ fun StreamerListScreen(
                     .align(Alignment.Center)
             )
         }
-        if(state.isLoading){
+        if (state.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
         }
     }
+//    LaunchedEffect(key1 = state.player) { // Correct key
+//        if (state.player != null) { // Correct non-null check
+//            navController.navigate(
+//                Screen.StreamerDetailScreen.createRoute(
+//                    username = state.player.username,
+//                    followers = state.player.followers,
+//                    league = state.player.league,
+//                    lastOnline = state.player.lastOnline
+//                )
+//            )
+//            viewModel.resetPlayer() // Correctly reset the player
+//        }
+//    }
 }

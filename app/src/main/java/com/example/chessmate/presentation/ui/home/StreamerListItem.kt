@@ -2,7 +2,9 @@ package com.example.chessmate.presentation.ui.home
 
 import android.text.TextUtils
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -37,8 +39,9 @@ fun StreamerListItem (
 ) {
     Column (
         modifier = Modifier
+            .clickable { onItemClick(streamer) }
             .padding(10.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         Row(
             modifier = Modifier

@@ -2,6 +2,7 @@ package com.example.chessmate.database
 
 import android.content.Context
 import androidx.room.Room
+import com.example.chessmate.data.cache.dao.PlayerCacheDao
 import com.example.chessmate.data.cache.dao.StreamerCacheDao
 import dagger.Module
 import dagger.Provides
@@ -29,5 +30,10 @@ object DatabaseModule {
     @Provides
     fun provideStreamerCacheDao(database: StreamerCacheDatabase): StreamerCacheDao {
         return database.streamerCacheDao()
+    }
+
+    @Provides
+    fun providePlayerCacheDao(database: StreamerCacheDatabase): PlayerCacheDao {
+        return database.playerCacheDao()
     }
 }
