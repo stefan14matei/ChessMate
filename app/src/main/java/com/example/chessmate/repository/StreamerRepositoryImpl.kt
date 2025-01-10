@@ -6,6 +6,7 @@ import com.example.chessmate.data.remote.ChessApi
 import com.example.chessmate.data.remote.dto.PlayerDto
 import com.example.chessmate.data.remote.dto.StreamerDto
 import com.example.chessmate.domain.repository.StreamerRepository
+import java.io.IOException
 import javax.inject.Inject
 
 class StreamerRepositoryImpl @Inject constructor(
@@ -16,12 +17,12 @@ class StreamerRepositoryImpl @Inject constructor(
 
 
     override suspend fun getStreamers(): List<StreamerDto> {
-        val streamers = api.getStreamers().streamers
-        if (streamers.isNotEmpty()) {
+        try {
+            val streamers = api.getStreamers().streamers
             streamers.forEach { streamerCacheDao.insert(it.toStreamerEntity()) }
             return streamers
-        }
-        else {
+
+        } catch (e: IOException) {
             return streamerCacheDao.getAllStreamers()
                 .map { streamerCacheEntity -> StreamerDto.newInstance(streamerCacheEntity) }
                 .toList()
@@ -29,16 +30,16 @@ class StreamerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getStreamer(username: String): PlayerDto {
-        val streamer = api.getStreamerDetails(username)
-        if (streamer != PlayerDto.emptyInstance()) {
+        try {
+            val streamer = api.getStreamerDetails(username)
             playerCacheDao.insert(streamer.toStreamerEntity())
             return streamer
-        }
-        else if (playerCacheDao.getPlayerByUsername(username) != null) {
-            return PlayerDto.newInstance(playerCacheDao.getPlayerByUsername(username)!!)
-        }
-        else {
-            return PlayerDto.emptyInstance()
+        } catch (e: IOException) {
+            return if (playerCacheDao.getPlayerByUsername(username.lowercase()) != null) {
+                PlayerDto.newInstance(playerCacheDao.getPlayerByUsername(username.lowercase())!!)
+            } else {
+                throw e
+            }
         }
     }
 }

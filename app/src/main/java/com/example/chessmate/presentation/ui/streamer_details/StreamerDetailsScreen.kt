@@ -240,6 +240,16 @@ fun StreamerDetailsScreen (
                                 modifier = Modifier.align(CenterVertically),
                             )
                         }
+                    } ?: run {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row {
+                            Text(
+                                text = "No twitch link found",
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.align(CenterVertically),
+                                color = Color.Unspecified
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(

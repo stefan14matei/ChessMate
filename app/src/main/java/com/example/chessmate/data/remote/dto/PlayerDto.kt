@@ -2,7 +2,6 @@ package com.example.chessmate.data.remote.dto
 
 
 import com.example.chessmate.data.cache.PlayerCacheEntity
-import com.example.chessmate.data.cache.StreamerCacheEntity
 import com.google.gson.annotations.SerializedName
 
 data class PlayerDto(
@@ -80,7 +79,7 @@ data class PlayerDto(
     companion object {
         fun newInstance(playerCacheEntity: PlayerCacheEntity): PlayerDto {
             return PlayerDto(
-                username = playerCacheEntity.username.orEmpty(),
+                username = playerCacheEntity.username,
                 avatar = playerCacheEntity.avatar.orEmpty(),
                 country = playerCacheEntity.country.orEmpty(),
                 followers = playerCacheEntity.followers ?: 0,
@@ -100,26 +99,5 @@ data class PlayerDto(
             )
         }
 
-        fun emptyInstance(): PlayerDto {
-            return PlayerDto(
-                username = "",
-                avatar = "",
-                country = "",
-                followers = 0,
-                isStreamer = false,
-                joined = 0,
-                lastOnline = 0,
-                league = "",
-                location = "",
-                name = "",
-                status = "",
-                title = "",
-                twitchUrl = "",
-                url = "",
-                verified = false,
-                id = "",
-                playerId = 0
-            )
-        }
     }
 }
