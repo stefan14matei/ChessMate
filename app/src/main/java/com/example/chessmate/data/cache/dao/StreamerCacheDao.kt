@@ -13,7 +13,7 @@ interface StreamerCacheDao {
     suspend fun insert(streamer: StreamerCacheEntity)
 
     @Query("SELECT * FROM streamer_cache WHERE username = :username")
-    suspend fun getStreamerById(username: String): StreamerCacheEntity?
+    suspend fun getStreamerByUsername(username: String): StreamerCacheEntity?
 
     @Query("SELECT * FROM streamer_cache")
     suspend fun getAllStreamers(): List<StreamerCacheEntity>

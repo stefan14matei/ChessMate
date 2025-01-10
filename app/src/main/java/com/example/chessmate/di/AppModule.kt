@@ -1,6 +1,7 @@
 package com.example.chessmate.di
 
 import com.example.chessmate.common.Constants
+import com.example.chessmate.data.cache.dao.PlayerCacheDao
 import com.example.chessmate.data.cache.dao.StreamerCacheDao
 import com.example.chessmate.data.remote.ChessApi
 import com.example.chessmate.repository.StreamerRepositoryImpl
@@ -36,7 +37,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStreamerRepository(api: ChessApi, streamerCacheDao: StreamerCacheDao): StreamerRepository{
-        return StreamerRepositoryImpl(streamerCacheDao, api)
+    fun provideStreamerRepository(api: ChessApi, streamerCacheDao: StreamerCacheDao, playerCacheDao: PlayerCacheDao): StreamerRepository{
+        return StreamerRepositoryImpl(streamerCacheDao, playerCacheDao, api)
     }
 }

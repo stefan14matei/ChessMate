@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.chessmate.common.Resource
 import com.example.chessmate.data.remote.dto.PlayerDto
-import com.example.chessmate.data.remote.dto.StreamerDto
-import com.example.chessmate.data.repository.PlayerRepository
+import com.example.chessmate.domain.use_case.get_streamer.GetPlayerUseCase
 import com.example.chessmate.domain.use_case.get_steamers.GetStreamersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -18,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StreamerListViewModel @Inject constructor(
     private val getStreamersUseCase: GetStreamersUseCase,
-    private val playerRepository: PlayerRepository
+    private val getPlayerUseCase: GetPlayerUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(StreamerListState())
@@ -49,7 +48,7 @@ class StreamerListViewModel @Inject constructor(
 
     fun getPlayerData(username: String) {
         viewModelScope.launch {
-            playerRepository.getPlayerData(username).onEach { result ->
+            getPlayerUseCase.getPlayerData(username).onEach { result ->
                 when (result) {
                     is Resource.Success -> {
                         result.data?.let {
