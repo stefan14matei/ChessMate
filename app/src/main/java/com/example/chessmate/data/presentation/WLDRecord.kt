@@ -16,4 +16,8 @@ data class WLDRecord (
             )
         }
     }
+
+    override fun toString(): String {
+        return "$wins/$losses/$draws"
+    }
 }

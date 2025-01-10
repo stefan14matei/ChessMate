@@ -1,11 +1,8 @@
 package com.example.chessmate.presentation.ui.streamer_details
 
-import android.text.TextUtils
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AutoFixNormal
+import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Camera
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.Leaderboard
@@ -29,17 +28,19 @@ import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Numbers
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.WatchLater
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withLink
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
 import com.example.chessmate.Screen
+import com.example.chessmate.data.presentation.GameType
 
 @Composable
 fun StreamerDetailsScreen (
@@ -57,7 +58,7 @@ fun StreamerDetailsScreen (
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp,0.dp,0.dp,15.dp)
+                            .padding(0.dp, 0.dp, 0.dp, 15.dp)
                     ) {
                         Icon(
                             Icons.Rounded.ChevronLeft,
@@ -90,9 +91,11 @@ fun StreamerDetailsScreen (
                                 text = streamerDetails.username,
                                 style = MaterialTheme.typography.h1,
                                 overflow =  TextOverflow.Ellipsis,
-                                modifier = Modifier.align(CenterVertically).padding(
-                                    horizontal = 15.dp
-                                ),
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(
+                                        horizontal = 15.dp
+                                    ),
                             )
                         }
                         streamerDetails.title?.let {
@@ -244,6 +247,36 @@ fun StreamerDetailsScreen (
                         style = MaterialTheme.typography.h3,
                     )
                     Spacer(modifier = Modifier.height(20.dp))
+                    GameModeStats(
+                        streamerDetails.stats.chessRapid,
+                        "Rapid",
+                        Icons.Rounded.WatchLater
+                    )
+                    GameModeStats(
+                        streamerDetails.stats.chessBlitz,
+                        "Blitz",
+                        Icons.Rounded.Bolt
+                    )
+                    GameModeStats(
+                        streamerDetails.stats.chessBullet,
+                        "Bullet",
+                        Icons.Rounded.AutoFixNormal
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row {
+                        Icon(
+                            Icons.Rounded.Leaderboard,
+                            contentDescription = "fideRating",
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .padding(horizontal = 5.dp),
+                        )
+                        Text(
+                            text = "Fide Rating: " + streamerDetails.stats.fideRating.toString(),
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
                 }
             }
         }
@@ -262,4 +295,44 @@ fun StreamerDetailsScreen (
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
+}
+
+@Composable
+private fun GameModeStats(gameType: GameType, GameModeName: String, icon: ImageVector) {
+    Row {
+        Row {
+            Icon(
+                icon,
+                contentDescription = "$GameModeName Stats",
+                modifier = Modifier
+                    .align(CenterVertically)
+                    .padding(horizontal = 5.dp),
+            )
+            Text(
+                text = "$GameModeName Stats:",
+                style = MaterialTheme.typography.body1,
+                color = Color.Unspecified,
+                modifier = Modifier.align(CenterVertically),
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(5.dp))
+    Row {
+        Text(
+            text = gameType.let { "$GameModeName Record: " + gameType.toString() },
+            style = MaterialTheme.typography.body1,
+            color = Color.Unspecified,
+            modifier = Modifier.align(CenterVertically),
+        )
+    }
+    Spacer(modifier = Modifier.width(10.dp))
+    Row {
+        Text(
+            text = gameType.let { "$GameModeName Rating: " + gameType.last.rating.toString() },
+            style = MaterialTheme.typography.body1,
+            color = Color.Unspecified,
+            modifier = Modifier.align(CenterVertically),
+        )
+    }
+    Spacer(modifier = Modifier.height(10.dp))
 }
