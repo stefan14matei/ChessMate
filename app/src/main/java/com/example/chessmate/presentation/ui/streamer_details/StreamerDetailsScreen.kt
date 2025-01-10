@@ -319,7 +319,7 @@ private fun GameModeStats(gameType: GameType, GameModeName: String, icon: ImageV
     Spacer(modifier = Modifier.height(5.dp))
     Row {
         Text(
-            text = gameType.let { "$GameModeName Record: " + gameType.toString() },
+            text = gameType.let { "$GameModeName Record: " + gameType.toString() + " (w/l/d)"},
             style = MaterialTheme.typography.body1,
             color = Color.Unspecified,
             modifier = Modifier.align(CenterVertically),
