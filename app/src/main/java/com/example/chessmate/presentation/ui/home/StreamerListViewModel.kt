@@ -17,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class StreamerListViewModel @Inject constructor(
     private val getStreamersUseCase: GetStreamersUseCase,
-    private val getPlayerUseCase: GetPlayerUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(StreamerListState())
@@ -31,7 +30,7 @@ class StreamerListViewModel @Inject constructor(
         getStreamersUseCase().onEach { res ->
             when (res) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(streamers = res.data ?: emptyList())
+                    _state.value = StreamerListState(streamers = res.data ?: emptyList())
                 }
 
                 is Resource.Error -> {
@@ -40,41 +39,9 @@ class StreamerListViewModel @Inject constructor(
                 }
 
                 is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
+                    _state.value = StreamerListState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    fun getPlayerData(username: String) {
-        viewModelScope.launch {
-            getPlayerUseCase.getPlayerData(username).onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        result.data?.let {
-                            navigateToDetailScreen(it)
-                        }
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = _state.value.copy(
-                            error = result.message ?: "An unexpected error occurred"
-                        )
-                    }
-
-                    is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true)
-                    }
-                }
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    private fun navigateToDetailScreen(player: PlayerDto) {
-        _state.value = _state.value.copy(player = player)
-    }
-
-    fun resetPlayer() {
-        _state.value = _state.value.copy(player = null)
     }
 }

@@ -13,10 +13,12 @@ import javax.inject.Inject
 class GetPlayerUseCase @Inject constructor(
     private val streamerRepository: StreamerRepository,
 ) {
-    fun getPlayerData(username: String): Flow<Resource<PlayerDto>> = flow {
-        emit(Resource.Loading())
+    operator fun invoke(username: String): Flow<Resource<PlayerDto>> = flow {
         try {
+            emit(Resource.Loading())
+
             val player = streamerRepository.getStreamer(username)
+
             emit(Resource.Success(player))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

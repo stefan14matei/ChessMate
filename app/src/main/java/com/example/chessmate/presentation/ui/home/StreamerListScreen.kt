@@ -10,14 +10,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.chessmate.presentation.navigation.Screen
+import com.example.chessmate.Screen
 
 @Composable
 fun StreamerListScreen(
@@ -30,10 +29,10 @@ fun StreamerListScreen(
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state.streamers) { streamer ->
-                StreamerCardItem(
+                StreamerListItem(
                     streamer = streamer,
-                    onItemClick = { clickedStreamer ->
-                        viewModel.getPlayerData(clickedStreamer.username)
+                    onItemClick = {
+                        navController.navigate(Screen.StreamerDetailsScreen.route + "/${streamer.username}")
                     }
                 )
             }
@@ -55,17 +54,17 @@ fun StreamerListScreen(
             )
         }
     }
-    LaunchedEffect(key1 = state.player) { // Correct key
-        if (state.player != null) { // Correct non-null check
-            navController.navigate(
-                Screen.StreamerDetailScreen.createRoute(
-                    username = state.player.username,
-                    followers = state.player.followers,
-                    league = state.player.league,
-                    lastOnline = state.player.lastOnline
-                )
-            )
-            viewModel.resetPlayer() // Correctly reset the player
-        }
-    }
+//    LaunchedEffect(key1 = state.player) { // Correct key
+//        if (state.player != null) { // Correct non-null check
+//            navController.navigate(
+//                Screen.StreamerDetailScreen.createRoute(
+//                    username = state.player.username,
+//                    followers = state.player.followers,
+//                    league = state.player.league,
+//                    lastOnline = state.player.lastOnline
+//                )
+//            )
+//            viewModel.resetPlayer() // Correctly reset the player
+//        }
+//    }
 }

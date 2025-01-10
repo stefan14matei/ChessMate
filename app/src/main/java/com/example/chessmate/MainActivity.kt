@@ -8,8 +8,8 @@ import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.chessmate.presentation.navigation.AppNavigation
 import com.example.chessmate.presentation.ui.home.StreamerListScreen
+import com.example.chessmate.presentation.ui.streamer_details.StreamerDetailsScreen
 import com.example.chessmate.presentation.ui.theme.ChessMateAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +30,12 @@ class MainActivity : ComponentActivity() {
                         ) {
                             StreamerListScreen(navController)
                         }
+                        composable(
+                            route = Screen.StreamerDetailsScreen.route + "/{username}"
+                        ) {
+                            StreamerDetailsScreen()
+                        }
                     }
-                    AppNavigation()
                 }
             }
         }
