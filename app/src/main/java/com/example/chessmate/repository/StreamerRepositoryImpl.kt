@@ -19,10 +19,10 @@ class StreamerRepositoryImpl @Inject constructor(
     override suspend fun getStreamers(): List<StreamerDto> {
         try {
             val streamers = api.getStreamers().streamers
-                streamers.forEach { streamerCacheDao.insert(it.toStreamerEntity()) }
-                return streamers
-        }
-        catch (e: IOException) {
+            streamers.forEach { streamerCacheDao.insert(it.toStreamerEntity()) }
+            return streamers
+
+        } catch (e: IOException) {
             return streamerCacheDao.getAllStreamers()
                 .map { streamerCacheEntity -> StreamerDto.newInstance(streamerCacheEntity) }
                 .toList()
@@ -34,12 +34,11 @@ class StreamerRepositoryImpl @Inject constructor(
             val streamer = api.getStreamerDetails(username)
             playerCacheDao.insert(streamer.toStreamerEntity())
             return streamer
-        }
-        catch (e: IOException) {
-            return if (playerCacheDao.getPlayerByUsername(username) != null) {
-                PlayerDto.newInstance(playerCacheDao.getPlayerByUsername(username)!!)
+        } catch (e: IOException) {
+            return if (playerCacheDao.getPlayerByUsername(username.lowercase()) != null) {
+                PlayerDto.newInstance(playerCacheDao.getPlayerByUsername(username.lowercase())!!)
             } else {
-                PlayerDto.emptyInstance()
+                throw e
             }
         }
     }

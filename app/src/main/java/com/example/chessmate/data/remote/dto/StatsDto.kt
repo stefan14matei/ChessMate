@@ -34,4 +34,97 @@ class StatsDto {
             fideRating = fide ?: 0
         )
     }
+
+    companion object {
+        fun newInstance(statsCacheEntity: StatsCacheEntity): StatsDto {
+            return StatsDto().apply {
+                chessRapid = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = statsCacheEntity.rapidRating
+                    }
+                    best = GameDto().apply {
+                        rating = statsCacheEntity.rapidRating
+                    }
+                    record = RecordDto().apply {
+                        win = statsCacheEntity.rapidWins
+                        loss = statsCacheEntity.rapidLosses
+                        draw = statsCacheEntity.rapidDraws
+                    }
+                }
+                chessBullet = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = statsCacheEntity.bulletRating
+                    }
+                    best = GameDto().apply {
+                        rating = statsCacheEntity.bulletRating
+                    }
+                    record = RecordDto().apply {
+                        win = statsCacheEntity.bulletWins
+                        loss = statsCacheEntity.bulletLosses
+                        draw = statsCacheEntity.bulletDraws
+                    }
+                }
+                chessBlitz = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = statsCacheEntity.blitzRating
+                    }
+                    best = GameDto().apply {
+                        rating = statsCacheEntity.blitzRating
+                    }
+                    record = RecordDto().apply {
+                        win = statsCacheEntity.blitzWins
+                        loss = statsCacheEntity.blitzLosses
+                        draw = statsCacheEntity.blitzDraws
+                    }
+                }
+                fide = statsCacheEntity.fideRating
+            }
+        }
+
+        fun emptyInstance(): StatsDto {
+            return StatsDto().apply {
+                chessRapid = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = 0
+                    }
+                    best = GameDto().apply {
+                        rating = 0
+                    }
+                    record = RecordDto().apply {
+                        win = 0
+                        loss = 0
+                        draw = 0
+                    }
+                }
+                chessBullet = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = 0
+                    }
+                    best = GameDto().apply {
+                        rating = 0
+
+                    }
+                    record = RecordDto().apply {
+                        win = 0
+                        loss = 0
+                        draw = 0
+                    }
+                }
+                chessBlitz = GameTypeDto().apply {
+                    last = GameDto().apply {
+                        rating = 0
+                    }
+                    best = GameDto().apply {
+                        rating = 0
+                    }
+                    record = RecordDto().apply {
+                        win = 0
+                        loss = 0
+                        draw = 0
+                    }
+                }
+                fide = 0
+            }
+        }
+    }
 }
