@@ -45,6 +45,18 @@ fun StreamerDetailsScreen (
                                 .align(CenterVertically)
                                 .weight(2f)
                         )
+                        Text(
+                            text = "Followers: ${streamer.followers}",
+                            style = MaterialTheme.typography.h2,
+                            modifier = Modifier.weight(2f)
+                        )
+                        Text(
+                            text = "Blitz Record: ${streamer.stats.chessBlitz.record.wins}-" +
+                                    "${streamer.stats.chessBlitz.record.losses}-" +
+                                    "${streamer.stats.chessBlitz.record.draws}",
+                            style = MaterialTheme.typography.h2,
+                            modifier = Modifier.weight(2f)
+                        )
                     }
                     Spacer(modifier = Modifier.height(15.dp))
                 }

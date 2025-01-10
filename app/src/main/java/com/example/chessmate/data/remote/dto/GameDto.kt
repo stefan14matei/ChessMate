@@ -4,8 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 class GameDto {
     @SerializedName("rating")
-    var rating: Int? = null
+    var rating: Int? = 0
 
     @SerializedName("date")
-    var date: Int? = null
+    var date: Int? = 0
+
 }

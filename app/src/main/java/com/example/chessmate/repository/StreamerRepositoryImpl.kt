@@ -17,7 +17,7 @@ class StreamerRepositoryImpl @Inject constructor(
 
     override suspend fun getStreamers(): List<StreamerDto> {
         val streamers = api.getStreamers().streamers
-        if (!streamers.isEmpty()) {
+        if (streamers.isNotEmpty()) {
             streamers.forEach { streamerCacheDao.insert(it.toStreamerEntity()) }
             return streamers
         }
