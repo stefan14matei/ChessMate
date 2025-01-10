@@ -40,13 +40,13 @@ class StreamerDetailsViewModel @Inject constructor(
                     }
 
                     is Resource.Error -> {
-                        _state.value = _state.value.copy(
+                        _state.value = StreamerDetailsState(
                             error = result.message ?: "An unexpected error occurred"
                         )
                     }
 
                     is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = true)
+                        _state.value = StreamerDetailsState(isLoading = true)
                     }
                 }
             }.launchIn(viewModelScope)

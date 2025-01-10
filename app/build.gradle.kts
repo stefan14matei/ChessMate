@@ -50,8 +50,9 @@ kapt {
 dependencies {
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+    implementation("androidx.compose.material:material-icons-extended-android:1.7.6")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("androidx.room:room-runtime:2.6.1") // Replace 2.x.x with the latest version
+    implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation (libs.retrofit)
     implementation(libs.converter.gson)

@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.StreamerDetailsScreen.route + "/{username}"
                         ) {
-                            StreamerDetailsScreen()
+                            StreamerDetailsScreen(navController)
                         }
                     }
                 }
