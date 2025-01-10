@@ -54,17 +54,4 @@ fun StreamerListScreen(
             )
         }
     }
-//    LaunchedEffect(key1 = state.player) { // Correct key
-//        if (state.player != null) { // Correct non-null check
-//            navController.navigate(
-//                Screen.StreamerDetailScreen.createRoute(
-//                    username = state.player.username,
-//                    followers = state.player.followers,
-//                    league = state.player.league,
-//                    lastOnline = state.player.lastOnline
-//                )
-//            )
-//            viewModel.resetPlayer() // Correctly reset the player
-//        }
-//    }
 }
