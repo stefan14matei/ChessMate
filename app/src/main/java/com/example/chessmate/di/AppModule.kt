@@ -4,8 +4,10 @@ import com.example.chessmate.common.Constants
 import com.example.chessmate.data.cache.dao.PlayerCacheDao
 import com.example.chessmate.data.cache.dao.StreamerCacheDao
 import com.example.chessmate.data.remote.ChessApi
+import com.example.chessmate.domain.repository.StatsRepository
 import com.example.chessmate.repository.StreamerRepositoryImpl
 import com.example.chessmate.domain.repository.StreamerRepository
+import com.example.chessmate.repository.StatsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +41,11 @@ object AppModule {
     @Singleton
     fun provideStreamerRepository(api: ChessApi, streamerCacheDao: StreamerCacheDao, playerCacheDao: PlayerCacheDao): StreamerRepository{
         return StreamerRepositoryImpl(streamerCacheDao, playerCacheDao, api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatsRepository(api: ChessApi): StatsRepository {
+        return StatsRepositoryImpl(api)
     }
 }
