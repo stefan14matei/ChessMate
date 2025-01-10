@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "player_cache")
 data class PlayerCacheEntity (
     @PrimaryKey(autoGenerate = false)
-    var username: String?,
+    var username: String,
     var avatar: String?,
     var country: String?,
     var followers: Int?,
