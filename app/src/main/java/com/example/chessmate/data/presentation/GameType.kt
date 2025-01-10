@@ -29,4 +29,8 @@ data class GameType (
             )
         }
     }
+
+    override fun toString(): String {
+        return "$record"
+    }
 }
